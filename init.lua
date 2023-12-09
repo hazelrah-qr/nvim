@@ -114,16 +114,19 @@ require('lazy').setup({
       },
     },
   },
-
   {
     'projekt0n/github-nvim-theme', version = 'v0.0.7',
+  },
+  {
+    "folke/tokyonight.nvim",
+    lazy = false,
+    priority = 1000,
+    opts = {},
     config = function()
-      require('github-theme').setup({
-      })
-      vim.cmd('colorscheme github_dark')
+      require('tokyonight').setup({})
+      vim.cmd('colorscheme tokyonight')
     end
   },
-
   { -- Set lualine as statusline
     'nvim-lualine/lualine.nvim',
     -- See `:help lualine.txt`
@@ -141,10 +144,8 @@ require('lazy').setup({
     'lukas-reineke/indent-blankline.nvim',
     -- Enable `lukas-reineke/indent-blankline.nvim`
     -- See `:help indent_blankline.txt`
-    opts = {
-      char = '┊',
-      show_trailing_blankline_indent = false,
-    },
+    main = "ibl",
+    opt = ""
   },
 
   -- "gc" to comment visual regions/lines

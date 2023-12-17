@@ -41,7 +41,8 @@ P.S. You can delete this when you're done too. It's your config now :)
 --  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
-
+vim.g.python_host_prog = '/usr/local/bin/python'
+vim.g.python3_host_prog = '/usr/local/bin/python'
 -- Install package manager
 --    https://github.com/folke/lazy.nvim
 --    `:help lazy.nvim.txt` for more info
@@ -65,7 +66,7 @@ vim.opt.rtp:prepend(lazypath)
 --    as they will be available in your neovim runtime.
 require('lazy').setup({
   --  spec = {
-    --{ import = "lazyvim.plugins.extras.coding.copilot" },
+  --{ import = "lazyvim.plugins.extras.coding.copilot" },
   --},
   "github/copilot.vim",
   -- NOTE: First, some plugins that don't require any configuration
@@ -82,13 +83,19 @@ require('lazy').setup({
     'neovim/nvim-lspconfig',
     dependencies = {
       -- Automatically install LSPs to stdpath for neovim
-      { 'williamboman/mason.nvim', config = true },
+      {
+        'williamboman/mason.nvim',
+        config = true,
+        ensure_installed = {
+          "pyright",
+          "terraform-ls",
+          "gopls",
+        },
+      },
       'williamboman/mason-lspconfig.nvim',
 
       -- Useful status updates for LSP
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-      { 'j-hui/fidget.nvim', opts = {} },
-
       -- Additional lua configuration, makes nvim stuff amazing!
       'folke/neodev.nvim',
     },
@@ -100,7 +107,7 @@ require('lazy').setup({
   },
 
   -- Useful plugin to show you pending keybinds.
-  { 'folke/which-key.nvim', opts = {} },
+  { 'folke/which-key.nvim',          opts = {} },
   { -- Adds git releated signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
     opts = {
@@ -115,7 +122,7 @@ require('lazy').setup({
     },
   },
   {
-    'projekt0n/github-nvim-theme', version = 'v0.0.7',
+    'projekt0n/github-nvim-theme',
   },
   {
     "folke/tokyonight.nvim",
@@ -124,7 +131,7 @@ require('lazy').setup({
     opts = {},
     config = function()
       require('tokyonight').setup({})
-      vim.cmd('colorscheme tokyonight')
+      vim.cmd('colorscheme tokyonight-night')
     end
   },
   { -- Set lualine as statusline
@@ -149,7 +156,7 @@ require('lazy').setup({
   },
 
   -- "gc" to comment visual regions/lines
-  { 'numToStr/Comment.nvim', opts = {} },
+  { 'numToStr/Comment.nvim',         opts = {} },
 
   -- Fuzzy Finder (files, lsp, etc)
   { 'nvim-telescope/telescope.nvim', version = '*', dependencies = { 'nvim-lua/plenary.nvim' } },
